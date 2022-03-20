@@ -8,4 +8,4 @@ riderModule.iml
 .vscode
 .vs
 
-./appsettings.json
+appsettings.json
