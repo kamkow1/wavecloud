@@ -1,6 +1,8 @@
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using wavecloud.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,6 +27,12 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddDbContextPool<ApplicationDbContext>(options => options.UseNpgsql(
+    configuration.GetConnectionString("DEFAULT_CONNECTION_STRING"))
+    .UseSnakeCaseNamingConvention()
+    .UseLowerCaseNamingConvention()
+);
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -35,9 +43,16 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
 app.UseStaticFiles();
+
+app.UsePathBase(new PathString("/api"));
+
 app.UseRouting();
 
+app.UseAuthentication();
+
+app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
