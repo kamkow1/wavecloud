@@ -1,20 +1,47 @@
-﻿using System.Text.RegularExpressions;
+﻿using System;
+using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using wavecloud.Data;
 using wavecloud.Data.Models;
+using System.IdentityModel.Tokens.Jwt;
+using System.Text;
+using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 
 namespace wavecloud.Controllers;
 
+[ApiController]
 [Route("user")]
 public class UserController : ControllerBase
 {
     private readonly ApplicationDbContext _dbcontext;
-    
-    public UserController(ApplicationDbContext dbcontext)
+    private readonly ILogger<UserController> _logger;
+    private readonly IConfiguration _config;
+
+    public UserController(ApplicationDbContext dbcontext, ILogger<UserController> logger, IConfiguration config)
     {
         this._dbcontext = dbcontext;
+        this._logger = logger;
+        this._config = config;
+    }
+    
+    [HttpPost]
+    [Route("login")]
+    [AllowAnonymous]
+    public async Task<IActionResult> Login([FromBody] User user)
+    {
+        var response = Unauthorized("could not find a user with such username or password") as IActionResult;
+        
+        var foundUser = await _dbcontext.Users.FirstOrDefaultAsync(e => e.Username == user.Username);
+
+        if (BCrypt.Net.BCrypt.Verify(user.Password, foundUser?.Password))
+            response = Ok(new {token = GenerateJwt()});
+        
+        return response;
     }
 
     [HttpPost]
@@ -39,22 +66,55 @@ public class UserController : ControllerBase
         if (foundUserByEmail is not null)
             return Conflict("user with this email already exists");
         
-        if (user.Username.Trim().Length == 0)
+        if (user?.Username?.Trim().Length == 0)
             return BadRequest("invalid username");
 
-        if (user.Password.Trim().Length == 0)
+        if (user?.Password?.Trim().Length == 0)
             return BadRequest("invalid password");
 
         var salt = BCrypt.Net.BCrypt.GenerateSalt(10);
         
         await _dbcontext.Users.AddAsync(new User()
         {
-            Username = user.Username,
-            Email = user.Email,
-            Password = BCrypt.Net.BCrypt.HashPassword(user.Password, salt)
+            Username = user?.Username,
+            Email = user?.Email,
+            Password = BCrypt.Net.BCrypt.HashPassword(user?.Password, salt)
         });
         await _dbcontext.SaveChangesAsync();
 
         return Ok("user was registered successfully");
+    }
+
+    [HttpPost]
+    [Route("profile")]
+    [Authorize]
+    public async Task<IActionResult> GetUserProfileInfo([FromBody] User user)
+    {
+        var foundUser = await _dbcontext.Users.FirstOrDefaultAsync(e => e.Username == user.Username);
+
+        if (foundUser is null)
+            return NotFound("could not find user with provided name");
+
+        return Ok(new
+        {
+            username = foundUser.Username,
+            email = foundUser.Email
+        });
+    }
+       
+    private string GenerateJwt()
+    {
+        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
+        var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+        var token = new JwtSecurityToken(
+            issuer: _config["Jwt:Issuer"],
+            audience: _config["Jwt:Audience"],
+            claims: null,
+            expires: DateTime.Now.AddMinutes(999),
+            signingCredentials: credentials
+        );
+
+        return new JwtSecurityTokenHandler().WriteToken(token);
     }
 }

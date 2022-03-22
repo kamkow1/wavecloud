@@ -1,6 +1,10 @@
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using wavecloud.Data;
 
@@ -8,30 +12,36 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-ConfigurationManager configuration = builder.Configuration;
+ConfigurationManager config = builder.Configuration;
 
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(
+        config.GetConnectionString("DEFAULT_CONNECTION_STRING"))
+    .UseSnakeCaseNamingConvention()
+    .UseLowerCaseNamingConvention()
+);
+
+builder.Services
+    .AddAuthentication(options =>
+    {
+        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+        options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+    })
     .AddJwtBearer(options =>
     {
-        options.TokenValidationParameters = new()
+        options.TokenValidationParameters = new TokenValidationParameters()
         {
             ValidateIssuer = true,
             ValidateAudience = true,
             ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
-            ValidIssuer = configuration["Jwt:Issuer"],
-            ValidAudience = configuration["Jwt:Audience"],
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]))
+            ValidIssuer = config["Jwt:Issuer"],
+            ValidAudience = config["Jwt:Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["Jwt:Key"]))
         };
     });
 
 builder.Services.AddControllersWithViews();
-
-builder.Services.AddDbContextPool<ApplicationDbContext>(options => options.UseNpgsql(
-    configuration.GetConnectionString("DEFAULT_CONNECTION_STRING"))
-    .UseSnakeCaseNamingConvention()
-    .UseLowerCaseNamingConvention()
-);
 
 var app = builder.Build();
 
@@ -43,15 +53,10 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseStaticFiles();
-
-app.UsePathBase(new PathString("/api"));
-
 app.UseRouting();
 
 app.UseAuthentication();
-
 app.UseAuthorization();
 
 app.MapControllerRoute(

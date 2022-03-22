@@ -5,9 +5,9 @@ const fs = require('fs');
 const path = require('path');
 
 const baseFolder =
-  process.env.APPDATA !== undefined && process.env.APPDATA !== ''
-    ? `${process.env.APPDATA}/ASP.NET/https`
-    : `${process.env.HOME}/.aspnet/https`;
+    process.env.APPDATA !== undefined && process.env.APPDATA !== ''
+        ? `${process.env.APPDATA}/ASP.NET/https`
+        : `${process.env.HOME}/.aspnet/https`;
 
 const certificateArg = process.argv.map(arg => arg.match(/--name=(?<value>.+)/i)).filter(Boolean)[0];
 const certificateName = certificateArg ? certificateArg.groups.value : process.env.npm_package_name;
@@ -22,14 +22,14 @@ const keyFilePath = path.join(baseFolder, `${certificateName}.key`);
 
 if (!fs.existsSync('.env.development.local')) {
   fs.writeFileSync(
-    '.env.development.local',
-`SSL_CRT_FILE=${certFilePath}
+      '.env.development.local',
+      `SSL_CRT_FILE=${certFilePath}
 SSL_KEY_FILE=${keyFilePath}`
   );
 } else {
   let lines = fs.readFileSync('.env.development.local')
-    .toString()
-    .split('\n');
+      .toString()
+      .split('\n');
 
   let hasCert, hasCertKey = false;
   for (const line of lines) {
@@ -42,14 +42,14 @@ SSL_KEY_FILE=${keyFilePath}`
   }
   if (!hasCert) {
     fs.appendFileSync(
-      '.env.development.local',
-      `\nSSL_CRT_FILE=${certFilePath}`
+        '.env.development.local',
+        `\nSSL_CRT_FILE=${certFilePath}`
     );
   }
   if (!hasCertKey) {
     fs.appendFileSync(
-      '.env.development.local',
-      `\nSSL_KEY_FILE=${keyFilePath}`
+        '.env.development.local',
+        `\nSSL_KEY_FILE=${keyFilePath}`
     );
   }
 }
