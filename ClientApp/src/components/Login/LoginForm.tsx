@@ -1,7 +1,7 @@
 import UserStore from "../../stores/UserStore";
 import React from "react";
 import './LoginForm.scss';
-import ReactDOM from "react-dom";
+import axios from 'axios';
 
 interface IState {
     username: string;
@@ -20,6 +20,18 @@ export default class LoginForm extends React.Component<{ store: UserStore }, ISt
             
             showPassword: false
         };
+    }
+    
+    handleSubmit = () => {
+        console.log(process.env.ASPNETCORE_HTTPS_PORT);
+        axios.post('/api/user/login', {
+            username: this.state.username,
+            password: this.state.password
+        }).then((resp) => {
+            sessionStorage.setItem('TOKEN', resp.data.token);
+            
+            window.location.href = '/';
+        });
     }
     
     render () {
@@ -66,7 +78,9 @@ export default class LoginForm extends React.Component<{ store: UserStore }, ISt
                     </div>
                 </div>
                 
-                <button className="btn btn-primary">sign in</button>
+                <button className="btn btn-primary" onClick={this.handleSubmit}>
+                    sign in
+                </button>
             </div>
         );
     }

@@ -11,15 +11,15 @@ export default class App extends Component {
   static displayName = App.name;
   
   render () {
-    const userStore = new UserStore();
+      const userStore = new UserStore();
     
-    return (
-      <Layout>
-        <Routes>
-          <Route path='/' element={<Home store={userStore} />} />
-          <Route path='/login' element={<Login store={userStore} />} />
-        </Routes>
-      </Layout>
-    );
+      return (
+          <Layout>
+              <Routes>
+                  <Route path='/' element={<Home store={userStore} />} />
+                <Route path='/login' element={<Login store={userStore} />} />
+              </Routes>
+          </Layout>
+      );
   }
 }
