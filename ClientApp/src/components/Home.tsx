@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+import UserStore from "../stores/UserStore";
 
-export class Home extends Component {
+export class Home extends Component<{ store: UserStore }> {
   static displayName = Home.name;
 
   render () {
