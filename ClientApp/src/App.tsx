@@ -14,10 +14,10 @@ export default class App extends Component {
       const userStore = new UserStore();
     
       return (
-          <Layout>
+          <Layout store={userStore}>
               <Routes>
                   <Route path='/' element={<Home store={userStore} />} />
-                <Route path='/login' element={<Login store={userStore} />} />
+                  <Route path='/login' element={<Login store={userStore} />} />
               </Routes>
           </Layout>
       );

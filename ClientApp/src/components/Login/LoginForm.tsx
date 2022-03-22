@@ -2,12 +2,14 @@ import UserStore from "../../stores/UserStore";
 import React from "react";
 import './LoginForm.scss';
 import axios from 'axios';
+import {Navigate} from "react-router-dom";
 
 interface IState {
     username: string;
     password: string;
     
     showPassword: boolean;
+    redirect: boolean;
 }
 
 export default class LoginForm extends React.Component<{ store: UserStore }, IState> {
@@ -18,7 +20,8 @@ export default class LoginForm extends React.Component<{ store: UserStore }, ISt
             username: '',
             password: '',
             
-            showPassword: false
+            showPassword: false,
+            redirect: false
         };
     }
     
@@ -38,13 +41,14 @@ export default class LoginForm extends React.Component<{ store: UserStore }, ISt
                 }
             }).then((resp) => {
                 this.props.store.setUser(resp.data);
-                
-                window.location.href = '/';
+                this.setState({...this.state, redirect: true});
             });
         });
     }
     
     render () {
+        if (this.state.redirect) return <Navigate to="/" />;
+        
         return (
             <div className="form-wrapper">
                 <div className="form-group">
