@@ -1,0 +1,36 @@
+.form-wrapper {
+  width: fit-content;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+
+.form-wrapper > div {
+  margin-top: 2em;
+  width: fit-content;
+}
+
+.password-group {
+  display: flex;
+  min-width: fit-content;
+}
+
+.toggle-password-visibility-icon, input[type=password] {
+  flex: 1;
+}
+
+.toggle-password-visibility-icon {
+  margin-left: 7px;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.hide-password {
+  -webkit-text-security: disc;
+}
+
+button {
+  width: 5em;
+  float: left;
+  margin-top: 2em;
+}
