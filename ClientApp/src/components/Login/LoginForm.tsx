@@ -30,7 +30,17 @@ export default class LoginForm extends React.Component<{ store: UserStore }, ISt
         }).then((resp) => {
             sessionStorage.setItem('TOKEN', resp.data.token);
             
-            window.location.href = '/';
+            axios.post('/api/user/profile', {
+                username: this.state.username
+            },{
+                headers: {
+                    Authorization: 'Bearer ' + sessionStorage.getItem('TOKEN')
+                }
+            }).then((resp) => {
+                this.props.store.setUser(resp.data);
+                
+                window.location.href = '/';
+            });
         });
     }
     
