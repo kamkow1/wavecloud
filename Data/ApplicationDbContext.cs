@@ -1,7 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using wavecloud.Data.Models;
-
-namespace wavecloud.Data;
+﻿namespace wavecloud.Data;
 
 public class ApplicationDbContext : DbContext
 {

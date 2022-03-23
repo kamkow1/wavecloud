@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace wavecloud.Data.Models;
+﻿namespace wavecloud.Data.Models;
 
 public class User
 {

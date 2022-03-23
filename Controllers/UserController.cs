@@ -1,18 +1,4 @@
-﻿using System;
-using System.Text.RegularExpressions;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using wavecloud.Data;
-using wavecloud.Data.Models;
-using System.IdentityModel.Tokens.Jwt;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
-using Microsoft.IdentityModel.Tokens;
-
-namespace wavecloud.Controllers;
+﻿namespace wavecloud.Controllers;
 
 [ApiController]
 [Route("user")]
