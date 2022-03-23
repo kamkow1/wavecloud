@@ -30,6 +30,14 @@
 		<Content Remove="$(SpaRoot)**" />
 		<None Remove="$(SpaRoot)**" />
 		<None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
+		<None Remove="Tests\**" />
+		<Content Remove="Tests\**" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Compile Remove="Tests\**" />
+	</ItemGroup>
+	<ItemGroup>
+	  <EmbeddedResource Remove="Tests\**" />
 	</ItemGroup>
 	<Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
 		<!-- Ensure Node.js is installed -->

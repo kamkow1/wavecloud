@@ -9,3 +9,5 @@ riderModule.iml
 .vs
 
 appsettings.json
+Tests/test-user-credentials.json
+Tests/node_modules
