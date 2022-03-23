@@ -39,9 +39,15 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
+    config["Jwt:Issuer"] = "https://localhost:7128";
+    config["Jwt:Audience"] = "https://localhost:7040";
+    
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+config["Jwt:Issuer"] = "upload-wavecloud.azurewebsites.net";
+config["Jwt:Audience"] = "wavecloud.azurewebsites.net";
 
 app.UseHttpsRedirection();
 
