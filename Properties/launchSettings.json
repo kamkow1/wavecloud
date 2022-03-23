@@ -8,7 +8,7 @@
     }
   },
   "profiles": {
-    "JwtTestWithReact": {
+    "wavecloud": {
       "commandName": "Project",
       "launchBrowser": true,
       "applicationUrl": "https://localhost:7040;http://localhost:5041",
