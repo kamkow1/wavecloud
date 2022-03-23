@@ -9,4 +9,10 @@ describe('POST /api/user/profile', () => {
 
         expect(response.status).to.equal(200);
     });
+
+    it('fails when provided token is invalid', async () => {        
+        let response = await getProfile("some text");
+
+        expect(response.status).to.equal(401);
+    });
 });

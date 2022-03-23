@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import fs from 'fs';
 
 export async function getJwt() {
