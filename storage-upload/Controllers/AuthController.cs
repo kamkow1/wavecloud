@@ -1,10 +1,4 @@
-﻿using System.IdentityModel.Tokens.Jwt;
-using System.Text;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
-
-namespace storage_upload.Controllers;
+﻿namespace storage_upload.Controllers;
 
 [ApiController]
 [Route("auth")]

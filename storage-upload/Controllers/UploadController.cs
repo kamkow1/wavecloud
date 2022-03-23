@@ -1,9 +1,4 @@
-﻿using Dropbox.Api;
-using Dropbox.Api.Files;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-
-namespace storage_upload.Controllers;
+﻿namespace storage_upload.Controllers;
 
 [ApiController]
 [Route("upload")]
