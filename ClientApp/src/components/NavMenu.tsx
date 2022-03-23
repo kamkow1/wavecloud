@@ -53,6 +53,8 @@ export class NavMenu extends Component<{ store: UserStore }, { collapsed: boolea
                     </NavItem>
                 }
               </ul>
+              
+              
             </Collapse>
           </Container>
         </Navbar>
