@@ -32,12 +32,34 @@
 		<None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
 		<None Remove="Tests\**" />
 		<Content Remove="Tests\**" />
+		<None Remove="wavecloud-upload\**" />
+		<Content Remove="wavecloud-upload\**" />
+		<None Remove="storage-upload\**" />
+		<Content Remove="storage-upload\**" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Compile Remove="Tests\**" />
+	  <Compile Remove="wavecloud-upload\**" />
+	  <Compile Remove="storage-upload\**" />
 	</ItemGroup>
 	<ItemGroup>
 	  <EmbeddedResource Remove="Tests\**" />
+	  <EmbeddedResource Remove="wavecloud-upload\**" />
+	  <EmbeddedResource Remove="storage-upload\**" />
+	</ItemGroup>
+	<ItemGroup>
+	  <_ContentIncludedByDefault Remove="wavecloud-upload\appsettings.Development.json" />
+	  <_ContentIncludedByDefault Remove="wavecloud-upload\appsettings.json" />
+	  <_ContentIncludedByDefault Remove="wavecloud-upload\obj\project.assets.json" />
+	  <_ContentIncludedByDefault Remove="wavecloud-upload\obj\project.packagespec.json" />
+	  <_ContentIncludedByDefault Remove="wavecloud-upload\obj\wavecloud-upload.csproj.nuget.dgspec.json" />
+	  <_ContentIncludedByDefault Remove="wavecloud-upload\Properties\launchSettings.json" />
+	  <_ContentIncludedByDefault Remove="storage-upload\appsettings.Development.json" />
+	  <_ContentIncludedByDefault Remove="storage-upload\appsettings.json" />
+	  <_ContentIncludedByDefault Remove="storage-upload\obj\project.assets.json" />
+	  <_ContentIncludedByDefault Remove="storage-upload\obj\project.packagespec.json" />
+	  <_ContentIncludedByDefault Remove="storage-upload\obj\storage-upload.csproj.nuget.dgspec.json" />
+	  <_ContentIncludedByDefault Remove="storage-upload\Properties\launchSettings.json" />
 	</ItemGroup>
 	<Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
 		<!-- Ensure Node.js is installed -->
