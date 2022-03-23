@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "wavecloud", "wavecloud.csproj", "{C35A5DE8-2784-45BA-AD1B-21519B8A8C22}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "app", "app", "{E4D01199-A878-4D82-BDC6-311B94FCC970}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,8 @@ Global
 		{C35A5DE8-2784-45BA-AD1B-21519B8A8C22}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C35A5DE8-2784-45BA-AD1B-21519B8A8C22}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C35A5DE8-2784-45BA-AD1B-21519B8A8C22}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C35A5DE8-2784-45BA-AD1B-21519B8A8C22} = {E4D01199-A878-4D82-BDC6-311B94FCC970}
 	EndGlobalSection
 EndGlobal
