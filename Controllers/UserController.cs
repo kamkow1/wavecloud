@@ -35,7 +35,7 @@ public class UserController : ControllerBase
     [HttpPost]
     [AllowAnonymous]
     [Route("register")]
-    public async Task<IActionResult> Register([FromBody] User user)
+    public async Task<IActionResult> Register([FromBody] UserRegisterModel user)
     {
         var emailRegex = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
 
