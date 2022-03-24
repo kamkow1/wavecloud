@@ -1,4 +1,6 @@
-﻿namespace wavecloud.Controllers;
+﻿using wavecloud.Controllers.Poco_Models;
+
+namespace wavecloud.Controllers;
 
 [ApiController]
 [Route("user")]
@@ -18,7 +20,7 @@ public class UserController : ControllerBase
     [HttpPost]
     [Route("login")]
     [AllowAnonymous]
-    public async Task<IActionResult> Login([FromBody] User user)
+    public async Task<IActionResult> Login([FromBody] UserLoginModel user)
     {
         var response = Unauthorized("could not find a user with such username or password") as IActionResult;
         
@@ -74,7 +76,7 @@ public class UserController : ControllerBase
     [HttpPost]
     [Route("profile")]
     [Authorize]
-    public async Task<IActionResult> GetUserProfileInfo([FromBody] User user)
+    public async Task<IActionResult> GetUserProfileInfo([FromBody] UserGetProfileInfoModel user)
     {
         var foundUser = await _dbcontext.Users.FirstOrDefaultAsync(e => e.Username == user.Username);
 

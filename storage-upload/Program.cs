@@ -37,7 +37,7 @@ if (app.Environment.IsDevelopment())
 {
     config["Jwt:Issuer"] = "https://localhost:7128";
     config["Jwt:Audience"] = "https://localhost:7040";
-    
+
     app.UseSwagger();
     app.UseSwaggerUI();
 }

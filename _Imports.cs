@@ -9,3 +9,5 @@ global using System.Text;
 global using Microsoft.IdentityModel.Tokens;
 global using System.ComponentModel.DataAnnotations;
 global using Microsoft.AspNetCore.Authentication.JwtBearer;
+global using Newtonsoft.Json;
+global using System.ComponentModel.DataAnnotations.Schema;
