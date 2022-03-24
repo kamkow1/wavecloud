@@ -63,8 +63,8 @@ public class TrackController : ControllerBase
 
         var response = await httpClient.GetAsync(_config["ServiceUrls:StorageUpload"] + "/auth/token");
 
-        dynamic obj = JsonConvert.DeserializeObject(await response.Content.ReadAsStringAsync());
+        dynamic? obj = JsonConvert.DeserializeObject(await response.Content.ReadAsStringAsync());
 
-        return obj.token;
+        return obj?.token ?? throw new NullReferenceException("token is null");
     }
 }
