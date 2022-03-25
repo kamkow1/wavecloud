@@ -13,3 +13,4 @@ Tests/test-user-credentials.json
 Tests/node_modules
 storage-upload/appsettings.Development.json
 storage-upload/appsettings.json
+Tests/requests/test-files

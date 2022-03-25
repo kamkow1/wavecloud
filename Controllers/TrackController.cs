@@ -20,6 +20,20 @@ public class TrackController : ControllerBase
     [Authorize]
     public async Task<IActionResult> UploadTrack(IFormFile file, string fileName, int userId)
     {
+
+        var track = new Track()
+        {
+            trackName = fileName.Replace(".mp3", ""),
+            UploadDate = DateTime.UtcNow,
+            AssociatedFileName = fileName,
+            UserId = userId
+        };
+        
+        // save data to database
+
+        await _dbcontext.Tracks.AddAsync(track);
+        await _dbcontext.SaveChangesAsync();
+        
         // upload file to storage
         
         var client = new HttpClient();
@@ -39,18 +53,6 @@ public class TrackController : ControllerBase
         };
 
         var response = await client.PostAsync(_config["ServiceUrls:StorageUpload"] + $"/upload?fileName={fileName}&trackId=7239", multiContent);
-        
-        // save data to database
-
-        await _dbcontext.Tracks.AddAsync(new Track()
-        {
-            trackName = fileName.Replace(".mp3", ""),
-            UploadDate = DateTime.UtcNow,
-            AssociatedFileName = fileName,
-            UserId = userId
-        });
-
-        await _dbcontext.SaveChangesAsync();
 
         return Ok(JsonConvert.DeserializeObject(await response.Content.ReadAsStringAsync()));
     }
