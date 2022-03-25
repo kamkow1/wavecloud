@@ -15,12 +15,12 @@ public class UploadController : ControllerBase
     
     [HttpPost]
     [Authorize]
-    public async Task<IActionResult> UploadFileToStorage(IFormFile file, string fileName, string trackId, CancellationToken cancellationToken)
+    public async Task<IActionResult> UploadFileToStorage(IFormFile file, string fileName, CancellationToken cancellationToken)
     {
         var dbx = new DropboxClient(_config["Dropbox:Token"]);
         var memoryStream = new MemoryStream(await GetBytes(file));
 
-        var path = $"/tracks/{trackId}-{fileName}-{Guid.NewGuid()}.mp3";
+        var path = $"/tracks/{fileName}.mp3";
         
         await dbx.Files.UploadAsync(
             path,

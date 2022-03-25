@@ -7,7 +7,6 @@ ConfigurationManager config = builder.Configuration;
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(
         config.GetConnectionString("DEFAULT_CONNECTION_STRING"))
     .UseSnakeCaseNamingConvention()
-    .UseLowerCaseNamingConvention()
 );
 
 builder.Services

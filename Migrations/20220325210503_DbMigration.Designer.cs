@@ -12,8 +12,8 @@ using wavecloud.Data;
 namespace wavecloud.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220323233157_TrackMigration")]
-    partial class TrackMigration
+    [Migration("20220325210503_DbMigration")]
+    partial class DbMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -33,27 +33,24 @@ namespace wavecloud.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseSerialColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("AssociatedFileName")
-                        .HasColumnType("text")
-                        .HasColumnName("associatedfilename");
-
-                    b.Property<DateTime?>("UploadDate")
+                    b.Property<DateTime>("UploadDate")
                         .HasColumnType("timestamp with time zone")
-                        .HasColumnName("uploaddate");
+                        .HasColumnName("upload_date");
 
                     b.Property<int>("UserId")
                         .HasColumnType("integer")
-                        .HasColumnName("userid");
+                        .HasColumnName("user_id");
 
                     b.Property<string>("trackName")
+                        .IsRequired()
                         .HasColumnType("text")
-                        .HasColumnName("trackname");
+                        .HasColumnName("track_name");
 
                     b.HasKey("Id")
                         .HasName("pk_tracks");
 
                     b.HasIndex("UserId")
-                        .HasDatabaseName("ix_tracks_userid");
+                        .HasDatabaseName("ix_tracks_user_id");
 
                     b.ToTable("tracks", (string)null);
                 });
@@ -68,14 +65,21 @@ namespace wavecloud.Migrations
                     NpgsqlPropertyBuilderExtensions.UseSerialColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("email");
 
+                    b.Property<DateTime>("JoinedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("joined_at");
+
                     b.Property<string>("Password")
+                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("password");
 
                     b.Property<string>("Username")
+                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("username");
 
@@ -92,7 +96,7 @@ namespace wavecloud.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_tracks_users_userid");
+                        .HasConstraintName("fk_tracks_users_user_id");
 
                     b.Navigation("User");
                 });

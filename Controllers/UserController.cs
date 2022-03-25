@@ -64,8 +64,9 @@ public class UserController : ControllerBase
         
         await _dbcontext.Users.AddAsync(new User()
         {
-            Username = user?.Username,
-            Email = user?.Email,
+            Username = user.Username,
+            Email = user.Email,
+            JoinedAt = DateTime.UtcNow,
             Password = BCrypt.Net.BCrypt.HashPassword(user?.Password, salt)
         });
         await _dbcontext.SaveChangesAsync();

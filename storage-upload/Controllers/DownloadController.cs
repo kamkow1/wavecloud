@@ -11,10 +11,11 @@ public class DownloadController : ControllerBase
         this._config = config;
     }
 
-    [HttpPost]
+    [HttpGet]
     [Authorize]
     public async Task<IActionResult> DownloadTrack(string fileName)
     {
+        Console.WriteLine(fileName);
         var dbx = new DropboxClient(_config["Dropbox:Token"]);
 
         var download = await dbx.Files.DownloadAsync("/tracks/" + fileName + ".mp3");

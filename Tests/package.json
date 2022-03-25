@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "test": "mocha --require ts-node/register './tests/tests-run-config.ts' --recursive --timeout 10000"
+    "test": "mocha --require ts-node/register './tests/tests-run-config.ts' --recursive --timeout 10000000"
   },
   "keywords": [],
   "author": "",
