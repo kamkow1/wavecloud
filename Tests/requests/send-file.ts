@@ -2,6 +2,7 @@ import axios from "axios";
 import { getJwt } from "./get-jwt";
 import FormData from "form-data";
 import fs from 'fs'
+import { randomUUID } from "crypto";
 
 export async function sendFile() {
     let jwtResult = await getJwt();
@@ -14,7 +15,7 @@ export async function sendFile() {
 
     let response = await axios({
         method: 'post',
-        url: `https://localhost:7040/api/track/upload?fileName=${params.file_name}&userId=${params!.user_id}`,
+        url: `https://localhost:7040/api/track/upload?fileName=${randomUUID()}&userId=${params!.user_id}`,
         headers: { 
           'Authorization': 'Bearer ' + token, 
           ...data.getHeaders()

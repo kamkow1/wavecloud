@@ -5,3 +5,4 @@ require('./user/get-tracks-test');
 
 // track tests
 require('./track/upload-test');
+require('./track/download-test');
