@@ -1,0 +1,18 @@
+﻿@import 'bootstrap';
+
+.form-wrapper {
+  width: fit-content;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+
+.form-wrapper > div {
+  margin-top: 2em;
+  width: fit-content;
+  min-width: 100%;
+}
+
+button {
+  margin-top: 2em;
+}

@@ -33,9 +33,7 @@ export default class LoginForm extends React.Component<{ store: UserStore }, ISt
         }).then((resp) => {
             sessionStorage.setItem('TOKEN', resp.data.token);
             
-            axios.post('/api/user/profile', {
-                username: this.state.username
-            },{
+            axios.get(`/api/user/profile?username=${this.state.username}`, {
                 headers: {
                     Authorization: 'Bearer ' + sessionStorage.getItem('TOKEN')
                 }

@@ -52,6 +52,11 @@ export class NavMenu extends Component<{ store: UserStore }, { collapsed: boolea
                       </NavLink>
                     </NavItem>
                 }
+                <NavItem>
+                  <NavLink tag={Link} className="text-dark" to="/upload">
+                    Upload
+                  </NavLink>
+                </NavItem>
               </ul>
               
               

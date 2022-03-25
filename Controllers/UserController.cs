@@ -86,6 +86,7 @@ public class UserController : ControllerBase
 
         return Ok(new
         {
+            id = foundUser.Id,
             username = foundUser.Username,
             email = foundUser.Email
         });
