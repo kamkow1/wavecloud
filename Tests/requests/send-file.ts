@@ -4,7 +4,6 @@ import FormData from "form-data";
 import fs from 'fs'
 
 export async function sendFile() {
-    console.log('CURRENT DIRNAME ' + __dirname);
     let jwtResult = await getJwt();
     let token = jwtResult.data.token;
 
