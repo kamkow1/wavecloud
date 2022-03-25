@@ -74,12 +74,12 @@ public class UserController : ControllerBase
         return Ok("user was registered successfully");
     }
 
-    [HttpPost]
+    [HttpGet]
     [Route("profile")]
     [Authorize]
-    public async Task<IActionResult> GetUserProfileInfo([FromBody] UserGetProfileInfoModel user)
+    public async Task<IActionResult> GetUserProfileInfo(string username)
     {
-        var foundUser = await _dbcontext.Users.FirstOrDefaultAsync(e => e.Username == user.Username);
+        var foundUser = await _dbcontext.Users.FirstOrDefaultAsync(e => e.Username == username);
 
         if (foundUser is null)
             return NotFound("could not find user with provided name");
@@ -90,7 +90,24 @@ public class UserController : ControllerBase
             email = foundUser.Email
         });
     }
-       
+
+    [HttpGet]
+    [Route("tracks")]
+    [Authorize]
+    public IActionResult GetUsersTracks(int userId)
+    {
+        return Ok(_dbcontext.Tracks.Where(e => e.UserId == userId)
+            .Select(e => new
+            {
+                e.Id,
+                e.trackName,
+                e.UploadDate,
+                e.UserId
+            })
+            .ToList()
+        );
+    }
+
     private string GenerateJwt()
     {
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
