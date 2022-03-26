@@ -2,18 +2,21 @@
 import UserStore from "../../stores/UserStore";
 import './UploadForm.scss';
 import axios from "axios";
+import {Spinner} from "reactstrap";
 
-export default class UploadForm extends React.Component<{ store: UserStore }, { title: string, file: File }> {
+export default class UploadForm extends React.Component<{ store: UserStore }, { title: string, file: File, showSpinner: boolean }> {
     constructor(props: { store: UserStore }) {
         super(props);
         
         this.state = {
             title: '',
-            file: {} as File
+            file: {} as File,
+            showSpinner: false
         };
     }
     
     handleSubmit = () => {
+        this.setState({...this.state, showSpinner: true});
         const formData = new FormData();
         formData.append('file',  this.state.file, this.state.file?.name);
         
@@ -22,7 +25,9 @@ export default class UploadForm extends React.Component<{ store: UserStore }, { 
                 headers: {
                     Authorization: 'Bearer ' + sessionStorage.getItem("TOKEN")
                 }
-            });
+            }).then(() => {
+                this.setState({...this.state, showSpinner: false});
+        });
     }
     
     handleFileChange = (e: ChangeEvent) => {
@@ -47,7 +52,9 @@ export default class UploadForm extends React.Component<{ store: UserStore }, { 
                 </div>
                 
                 <button className="btn btn-primary" onClick={this.handleSubmit}>
-                    upload
+                    {
+                        this.state.showSpinner ? <Spinner animation="border" size="sm" /> : "upload"
+                    }
                 </button>
             </div>
         );
