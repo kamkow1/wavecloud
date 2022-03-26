@@ -93,6 +93,9 @@ export default class LoginForm extends React.Component<{ store: UserStore }, ISt
                         </div>
                     </div>
                 </div>
+                <div className="form-group">
+                    <a className="form-text" href="/register">don't have an account? sign up!</a>
+                </div>
                 
                 <button className="btn btn-primary" onClick={this.handleSubmit}>
                     {this.state.showSpinner ? <Spinner animation="border" size="sm" /> : "sign in"}
