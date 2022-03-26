@@ -82,6 +82,14 @@ public class TrackController : ControllerBase
         return File(memoryStream, "audio/mpeg", track?.trackName);
     }
 
+    [HttpGet]
+    [Route("all")]
+    [Authorize]
+    public async Task<IActionResult> GetAllTracks()
+    {
+        return Ok(await _dbcontext.Tracks.Select(e => new { e.Id, e.trackName, e.UploadDate, e.UserId }).ToListAsync());
+    }
+
     private async Task<string> GetToken()
     {
         var httpClient = new HttpClient();
