@@ -62,7 +62,6 @@ public class TrackController : ControllerBase
 
     [HttpGet]
     [Route("download")]
-    [Authorize]
     public async Task<IActionResult> DownloadTrack(int trackId)
     {
         var track = _dbcontext.Tracks.FirstOrDefault(e => e.Id == trackId);

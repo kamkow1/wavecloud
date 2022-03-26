@@ -5,7 +5,7 @@ public class Track
     [Key]
     public int Id { get; set; }
 
-    public string trackName { get; set; }
+    public string? trackName { get; set; }
     
     public DateTime UploadDate { get; set; }
 
