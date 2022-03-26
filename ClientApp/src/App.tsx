@@ -7,6 +7,7 @@ import './custom.css'
 import UserStore from "./stores/UserStore";
 import Login from "./components/Login/Login";
 import Upload from "./components/Upload/Upload";
+import Register from './components/Register/Register';
 
 export default class App extends Component {
   static displayName = App.name;
@@ -20,6 +21,7 @@ export default class App extends Component {
                   <Route path='/' element={<Home store={userStore} />} />
                   <Route path='/login' element={<Login store={userStore} />} />
                   <Route path='/upload' element={<Upload store={userStore} />} />
+                  <Route path='/register' element={<Register store={userStore} />} />
               </Routes>
           </Layout>
       );
