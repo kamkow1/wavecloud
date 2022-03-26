@@ -3,6 +3,7 @@ import React from "react";
 import './LoginForm.scss';
 import axios from 'axios';
 import {Navigate} from "react-router-dom";
+import {Spinner} from "reactstrap";
 
 interface IState {
     username: string;
@@ -10,6 +11,7 @@ interface IState {
     
     showPassword: boolean;
     redirect: boolean;
+    showSpinner: boolean;
 }
 
 export default class LoginForm extends React.Component<{ store: UserStore }, IState> {
@@ -21,12 +23,14 @@ export default class LoginForm extends React.Component<{ store: UserStore }, ISt
             password: '',
             
             showPassword: false,
-            redirect: false
+            redirect: false,
+            showSpinner: false
         };
     }
     
     handleSubmit = () => {
-        console.log(process.env.ASPNETCORE_HTTPS_PORT);
+        this.setState({...this.state, showSpinner: true})
+        
         axios.post('/api/user/login', {
             username: this.state.username,
             password: this.state.password
@@ -39,7 +43,7 @@ export default class LoginForm extends React.Component<{ store: UserStore }, ISt
                 }
             }).then((resp) => {
                 this.props.store.setUser(resp.data);
-                this.setState({...this.state, redirect: true});
+                this.setState({...this.state, redirect: true, showSpinner: false});
             });
         });
     }
@@ -51,7 +55,7 @@ export default class LoginForm extends React.Component<{ store: UserStore }, ISt
             <div className="form-wrapper">
                 <div className="form-group">
                     <label htmlFor="username" className="control-label">username</label>
-                    <input className="form-control" placeholder="your username . . ." id="username" 
+                    <input className="form-control" placeholder="your username" id="username" 
                         onChange={(e) => {
                             this.setState({...this.state, username: e.target.value});
                         }} />
@@ -59,7 +63,7 @@ export default class LoginForm extends React.Component<{ store: UserStore }, ISt
                 <div className="form-group">
                     <label htmlFor="password" className="control-label">password</label>
                     <div className="password-group">
-                        <input className={`form-control ${!this.state.showPassword ? 'hide-password' : ''}`} placeholder="your password . . ." id="password"
+                        <input className={`form-control ${!this.state.showPassword ? 'hide-password' : ''}`} placeholder="your password" id="password"
                             onChange={(e) => {
                                 this.setState({...this.state, password: e.target.value});
                             }} />
@@ -91,7 +95,7 @@ export default class LoginForm extends React.Component<{ store: UserStore }, ISt
                 </div>
                 
                 <button className="btn btn-primary" onClick={this.handleSubmit}>
-                    sign in
+                    {this.state.showSpinner ? <Spinner animation="border" size="sm" /> : "sign in"}
                 </button>
             </div>
         );
