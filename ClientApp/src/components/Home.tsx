@@ -17,6 +17,8 @@ export class Home extends Component<{ store: UserStore }, { tracks: TrackModel[]
     }
 
     async componentDidMount() {
+        if (Object.keys(this.props.store.user).length === 0) return;
+
         let response = await axios.get('/api/track/all', {
             headers: {
                 Authorization: 'Bearer ' + sessionStorage.getItem("TOKEN")
@@ -28,7 +30,6 @@ export class Home extends Component<{ store: UserStore }, { tracks: TrackModel[]
 
     componentWillUnmount() {
         this.setState = (state, callback) => {
-            // fixes "Can't perform a React state update on an unmounted component"
             return;
         }
     }
