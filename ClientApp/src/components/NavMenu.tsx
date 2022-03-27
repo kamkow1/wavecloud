@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Collapse, Container, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink } from 'reactstrap';
-import { Link, Navigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import './NavMenu.css';
 import UserStore from "../stores/UserStore";
 import {observer} from "mobx-react";
@@ -51,21 +51,21 @@ export class NavMenu extends Component<{ store: UserStore },
   render () {
     return (
       <header>
-        <Navbar className="navbar-expand-sm navbar-toggleable-sm ng-white border-bottom box-shadow mb-3" light>
+        <Navbar className="navbar-expand-sm navbar-toggleable-sm ng-dark border-bottom box-shadow mb-3 bg-dark" dark>
           <Container>
             <NavbarBrand tag={Link} to="/">wavecloud</NavbarBrand>
             <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
             <Collapse className="d-sm-inline-flex flex-sm-row-reverse nav-list-wrapper" isOpen={!this.state.collapsed} navbar>
               <ul className="navbar-nav flex-grow">
                 <NavItem>
-                  <NavLink tag={Link} className="text-dark" to="/">Home</NavLink>
+                  <NavLink tag={Link} className="text-light" to="/">Home</NavLink>
                 </NavItem>
                 <NavItem>
-                  <NavLink tag={Link} className="text-dark" to="/login">Login</NavLink>
+                  <NavLink tag={Link} className="text-light" to="/login">Login</NavLink>
                 </NavItem>
                 {Object.keys(this.props.store.user).length !== 0 &&
                     <NavItem>
-                      <NavLink tag={Link} className="text-dark" to="/profile"
+                      <NavLink tag={Link} className="text-light" to="/profile"
                         onMouseEnter={this.toggleOptionsOn}
                         onMouseLeave={this.toggleOptionsOff}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor"
@@ -90,7 +90,7 @@ export class NavMenu extends Component<{ store: UserStore },
                     </NavItem>
                 }
                 <NavItem>
-                  <NavLink tag={Link} className="text-dark" to="/upload">
+                  <NavLink tag={Link} className="text-light" to="/upload">
                     Upload
                   </NavLink>
                 </NavItem>
