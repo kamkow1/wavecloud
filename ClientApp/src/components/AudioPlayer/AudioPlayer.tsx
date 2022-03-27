@@ -1,10 +1,9 @@
 ﻿import React from "react";
 import TrackModel from "../../models/track.model";
-import {Spinner} from "reactstrap";
 
 export default class AudioPlayer extends React.Component<
 { track: TrackModel }, 
-{ playAudio: boolean, audio: HTMLAudioElement }> {
+{ playAudio: boolean, audio: HTMLAudioElement, }> {
     constructor(props: { track: TrackModel }) {
         super(props);
         
@@ -25,12 +24,12 @@ export default class AudioPlayer extends React.Component<
     }
 
     toggleAudio = async (trackId: number) => {
-        console.log(this.state.playAudio)
         this.setState({...this.state, playAudio: !this.state.playAudio});
         
         if (!this.state.playAudio) {
             this.state.audio.src = `/api/track/download?trackId=${trackId}`;
             await this.state.audio.play();
+
         } else {
             this.state.audio.pause();
         }
@@ -39,12 +38,14 @@ export default class AudioPlayer extends React.Component<
     render () {
         if (this.state.playAudio) {
             return (
-                <svg xmlns="http://www.w3.org/2000/svg" width="70" height="70"
-                     fill="currentColor" className="bi bi-pause-fill" viewBox="0 0 16 16"
-                     onClick={() => this.toggleAudio(this.props.track.id!)}>
-                    <path
-                        d="M5.5 3.5A1.5 1.5 0 0 1 7 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5zm5 0A1.5 1.5 0 0 1 12 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5z"/>
-                </svg>
+                <div>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="70" height="70"
+                            fill="currentColor" className="bi bi-pause-fill" viewBox="0 0 16 16"
+                            onClick={() => this.toggleAudio(this.props.track.id!)}>
+                        <path
+                            d="M5.5 3.5A1.5 1.5 0 0 1 7 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5zm5 0A1.5 1.5 0 0 1 12 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5z"/>
+                    </svg>
+                </div>
             )
         }
         else {
