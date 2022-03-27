@@ -1,8 +1,8 @@
 ﻿import React from "react";
 import TrackModel from "../../models/track.model";
 import AudioSpectrum from 'react-audio-spectrum2';
-import { Collapse } from "reactstrap";
 import './AudioPlayer.scss';
+import { Collapse } from "reactstrap";
 
 export default class AudioPlayer extends React.Component<
 { track: TrackModel }, 
@@ -50,26 +50,27 @@ export default class AudioPlayer extends React.Component<
                     </svg>
 
                     <div className="track-date">posted: {this.getDate(this.props.track.uploadDate as Date)}</div>
-                    <div className="track-title">{this.props.track.trackName}</div>
 
                     <div className="waveform">
-                        <AudioSpectrum 
-                            audioEle={this.state.audio}
-                            id="audio-id"
-                            width={1260}
-                            height={300}
-                            audioId={undefined}
-                            capColor={"#c75634"}
-                            capHeight={5}
-                            meterWidth={10}
-                            meterCount={300}
-                            gap={5}
-                            meterColor={[
-                                {stop: 0, color: '#50a6ab'},
-                                {stop: 0.5, color: '#40c3c9'},
-                                {stop: 1, color: '#50a6ab'}
-                            ]}
-                            />
+                        <Collapse isOpen={this.state.playAudio}>
+                            <AudioSpectrum 
+                                audioEle={this.state.audio}
+                                id="audio-id"
+                                width={1260}
+                                height={300}
+                                audioId={undefined}
+                                capColor={"#c75634"}
+                                capHeight={5}
+                                meterWidth={10}
+                                meterCount={300}
+                                gap={5}
+                                meterColor={[
+                                    {stop: 0, color: '#50a6ab'},
+                                    {stop: 0.5, color: '#40c3c9'},
+                                    {stop: 1, color: '#50a6ab'}
+                                ]}
+                                />
+                        </Collapse>
                     </div>
                 </div>
             )

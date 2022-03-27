@@ -38,22 +38,24 @@ export class Home extends Component<{ store: UserStore }, { tracks: TrackModel[]
         if (Object.keys(this.props.store.user).length === 0) return <Navigate to="/login" />;
         return (
             
-            <div className="tracks-wrapper">
-                {this.state.tracks.map(track => {
-                    return (
-                        <div className="tracks-container" key={track.id}>
-                            <div className="track border-bottom">
-                                <div className="icon">
-                                    <AudioPlayer track={track} />
-                                </div>
+            <div className="main-container">
+                <div className="tracks-wrapper">
+                    {this.state.tracks.map(track => {
+                        return (
+                            <div className="tracks-container" key={track.id}>
+                                <div className="track border-bottom">
+                                    <div className="icon">
+                                        <AudioPlayer track={track} />
+                                    </div>
 
-                                <div className="name">
-                                    <div>{track.trackName}</div>
+                                    <div className="name">
+                                        <div>{track.trackName}</div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    );
-                })}
+                        );
+                    })}
+                </div>
             </div>
         );
     }
