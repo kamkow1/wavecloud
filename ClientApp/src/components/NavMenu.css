@@ -32,3 +32,10 @@ html {
 .options-menu {
   margin-top: 10px;
 }
+
+.menu-item {
+  text-decoration: none;
+  list-style-type: none;
+  display: flex;
+  justify-content: center;
+}

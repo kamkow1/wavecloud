@@ -76,16 +76,16 @@ export class NavMenu extends Component<{ store: UserStore },
                         </svg>
                         {this.props.store.user.username}
 
-                        {!this.state.showOptions && 
+                        <Collapse isOpen={!this.state.showOptions}>
                           <div className="options-menu">
-                            <ul className="list-group">
-                              <li className="list-group-item"
+                            <ul className="list-group bg-dark">
+                              <li className="menu-item border-bottom"
                                 onClick={this.signOut}>
                                 sign out
                               </li>
                             </ul>
                           </div>
-                        }
+                        </Collapse>
                       </NavLink>
                     </NavItem>
                 }
