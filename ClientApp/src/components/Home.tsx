@@ -4,7 +4,6 @@ import {Navigate} from "react-router";
 import axios from "axios";
 import TrackModel from "../models/track.model";
 import './Home.scss';
-import {Base64} from "js-base64";
 import AudioPlayer from "./AudioPlayer/AudioPlayer";
 
 export class Home extends Component<{ store: UserStore }, { tracks: TrackModel[], playAudio: boolean }> {
@@ -25,6 +24,13 @@ export class Home extends Component<{ store: UserStore }, { tracks: TrackModel[]
         });
 
         this.setState({...this.state, tracks: response.data});
+    }
+
+    componentWillUnmount() {
+        this.setState = (state, callback) => {
+            // fixes "Can't perform a React state update on an unmounted component"
+            return;
+        }
     }
 
     getDate = (date: Date): string => {
