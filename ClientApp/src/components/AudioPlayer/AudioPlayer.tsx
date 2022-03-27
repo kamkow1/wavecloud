@@ -1,5 +1,4 @@
 ﻿import React from "react";
-import axios from "axios";
 import TrackModel from "../../models/track.model";
 import {Spinner} from "reactstrap";
 
@@ -25,12 +24,12 @@ export default class AudioPlayer extends React.Component<{ track: TrackModel }, 
     toggleAudio = async (trackId: number) => {
         console.log(this.state.playAudio)
         this.setState({...this.state, playAudio: !this.state.playAudio});
-        let audio = new Audio(`/api/track/download?trackId=${trackId}`);
-
-        if (this.state.playAudio) {
+        
+        if (!this.state.playAudio) {
+            let audio = new Audio(`/api/track/download?trackId=${trackId}`);
             await audio.play();
         } else {
-            await audio.pause();
+            console.log('pause audio');
         }
     }
     
