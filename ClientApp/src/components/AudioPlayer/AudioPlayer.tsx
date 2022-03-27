@@ -1,5 +1,6 @@
 ﻿import React from "react";
 import TrackModel from "../../models/track.model";
+import AudioSpectrum from 'react-audio-spectrum2';
 
 export default class AudioPlayer extends React.Component<
 { track: TrackModel }, 
@@ -45,6 +46,24 @@ export default class AudioPlayer extends React.Component<
                         <path
                             d="M5.5 3.5A1.5 1.5 0 0 1 7 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5zm5 0A1.5 1.5 0 0 1 12 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5z"/>
                     </svg>
+
+                    <AudioSpectrum 
+                        audioEle={this.state.audio}
+                        id="audio-id"
+                        width={1200}
+                        height={300}
+                        audioId={undefined}
+                        capColor={"black"}
+                        capHeight={5}
+                        meterWidth={25}
+                        meterCount={300}
+                        gap={0}
+                        meterColor={[
+                            {stop: 0, color: '#fff'},
+                            {stop: 0.5, color: '#000'},
+                            {stop: 1, color: '#fff'}
+                          ]}
+                        />
                 </div>
             )
         }
