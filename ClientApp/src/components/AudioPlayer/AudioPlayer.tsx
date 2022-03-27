@@ -2,12 +2,15 @@
 import TrackModel from "../../models/track.model";
 import {Spinner} from "reactstrap";
 
-export default class AudioPlayer extends React.Component<{ track: TrackModel }, { playAudio: boolean }> {
+export default class AudioPlayer extends React.Component<
+{ track: TrackModel }, 
+{ playAudio: boolean, audio: HTMLAudioElement }> {
     constructor(props: { track: TrackModel }) {
         super(props);
         
         this.state = {
-            playAudio: false
+            playAudio: false,
+            audio: new Audio()
         };
     }
 
@@ -26,10 +29,10 @@ export default class AudioPlayer extends React.Component<{ track: TrackModel }, 
         this.setState({...this.state, playAudio: !this.state.playAudio});
         
         if (!this.state.playAudio) {
-            let audio = new Audio(`/api/track/download?trackId=${trackId}`);
-            await audio.play();
+            this.state.audio.src = `/api/track/download?trackId=${trackId}`;
+            await this.state.audio.play();
         } else {
-            console.log('pause audio');
+            this.state.audio.pause();
         }
     }
     
