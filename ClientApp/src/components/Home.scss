@@ -8,16 +8,8 @@
   flex-direction: column;
 }
 
-.track-title {
-  float: left;
-  margin-left: 3em;
-}
 .icon {
   float: left;
-}
-
-.play-btn {
-  margin-left: 2em;
 }
 
 .track {
@@ -26,14 +18,13 @@
 }
 
 .tracks-container {
-  //margin: 3em auto 4em 0;
   width: 100%;
   height: 100%;
 }
 
-.track-date {
-  float: right;
-  margin-right: 1em;
+.name {
+  display: flex;
+  justify-content: center;
 }
 
 .separator {

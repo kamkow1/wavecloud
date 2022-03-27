@@ -34,16 +34,6 @@ export class Home extends Component<{ store: UserStore }, { tracks: TrackModel[]
         }
     }
 
-    getDate = (date: Date): string => {
-        let parsedDate = new Date(date);
-        const monthNames = ["January", "February", "March", "April", "May", "June",
-            "July", "August", "September", "October", "November", "December"
-        ];
-
-
-        return `${parsedDate.getDate()} ${monthNames[parsedDate.getMonth()]} ${parsedDate.getFullYear()}`;
-    }
-
     render () {
         if (Object.keys(this.props.store.user).length === 0) return <Navigate to="/login" />;
         return (
@@ -56,8 +46,10 @@ export class Home extends Component<{ store: UserStore }, { tracks: TrackModel[]
                                 <div className="icon">
                                     <AudioPlayer track={track} />
                                 </div>
-                                <div className="track-date">posted: {this.getDate(track.uploadDate as Date)}</div>
-                                <div className="track-title">{track.trackName}</div>
+
+                                <div className="name">
+                                    <div>{track.trackName}</div>
+                                </div>
                             </div>
                         </div>
                     );
